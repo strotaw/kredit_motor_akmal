@@ -1,5 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Pelanggan extends Model
 {
+    use HasFactory;
+
     protected $table = 'pelanggan';
 
     protected $fillable = [
@@ -22,10 +31,7 @@ class Pelanggan extends Model
         'foto',
     ];
 
-    protected $hidden = ['password'];
-
-    public function pengajuanKredits()
-    {
-        return $this->hasMany(PengajuanKredit::class, 'id_pelanggan');
-    }
+    protected $hidden = [
+        'password',
+    ];
 }

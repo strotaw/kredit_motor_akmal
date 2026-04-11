@@ -1,5 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Asuransi extends Model
 {
+    use HasFactory;
+
     protected $table = 'asuransi';
 
     protected $fillable = [
@@ -7,8 +16,15 @@ class Asuransi extends Model
         'nama_asuransi',
         'margin_asuransi',
         'no_rekening',
-        'url_logo'
+        'url_logo',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'margin_asuransi' => 'decimal:2',
+        ];
+    }
 
     public function pengajuanKredits()
     {

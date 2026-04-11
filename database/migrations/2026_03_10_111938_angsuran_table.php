@@ -17,6 +17,11 @@ return new class extends Migration
             $table->date('tgl_bayar');
             $table->integer('angsuran_ke');
             $table->double('total_bayar');
+            $table->string('metode_bayar_snapshot')->nullable();
+            $table->string('bukti_bayar')->nullable();
+            $table->enum('status_verifikasi', ['menunggu', 'valid', 'ditolak'])->default('valid');
+            $table->foreignId('verified_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('verified_at')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('angsuran');
     }
 };

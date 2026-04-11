@@ -13,23 +13,29 @@ return new class extends Migration
     {
         Schema::create('pengajuan_kredit', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_pengajuan')->unique();
             $table->date('tgl_pengajuan_kredit');
-            $table->foreignId('id_pelanggan')->references('id')->on('pelanggan')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('id_motor')->references('id')->on('motor')->onUpdate('cascade')->onDelete('cascade');
-            $table->decimal('harga_cash', 11);
-            $table->decimal('dp', 11);
+            $table->decimal('harga_cash', 11, 2);
+            $table->decimal('dp', 11, 2);
             $table->foreignId('id_jenis_cicilan')->references('id')->on('jenis_cicilan')->onUpdate('cascade')->onDelete('cascade');
             $table->double('harga_kredit');
             $table->foreignId('id_asuransi')->references('id')->on('asuransi')->onUpdate('cascade')->onDelete('cascade');
             $table->double('biaya_asuransi_perbulan');
             $table->double('cicilan_perbulan');
-            $table->string('url_kk');
-            $table->string('url_ktp');
-            $table->string('url_npwp');
-            $table->string('url_slip_gaji');
-            $table->string('url_foto');
-            $table->enum('status_pengajuan', ['menunggu', 'diproses','dibatalkan_pembeli','dibatalkan_penjual', 'bermasalah', 'diterima'])->default('menunggu');
-            $table->string('keterangan_status_pengajuan');
+            $table->string('url_kk')->nullable();
+            $table->string('url_ktp')->nullable();
+            $table->string('url_npwp')->nullable();
+            $table->string('url_slip_gaji')->nullable();
+            $table->string('url_foto')->nullable();
+            $table->enum('status_pengajuan', ['menunggu', 'diproses', 'dibatalkan_pembeli', 'dibatalkan_penjual', 'bermasalah', 'diterima'])->default('menunggu');
+            $table->string('keterangan_status_pengajuan')->nullable();
+            $table->foreignId('assigned_admin_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('approved_at')->nullable();
+            $table->foreignId('rejected_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('rejected_at')->nullable();
             $table->timestamps();
         });
     }
@@ -39,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('pengajuan_kredit');
     }
 };

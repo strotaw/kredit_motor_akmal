@@ -11,25 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pelanggan', function (Blueprint $table) {
+        Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pelanggan');
-            $table->string('email');
-            $table->string('password', 15);
-            $table->string('no_telp', 15);
-            $table->string('alamat1');
-            $table->string('kota1');
-            $table->string('provinsi1');
-            $table->string('kodepos1');
-            $table->string('alamat2')->nullable();
-            $table->string('kota2')->nullable();
-            $table->string('provinsi2')->nullable();
-            $table->string('kodepos2')->nullable();
-            $table->string('alamat3')->nullable();
-            $table->string('kota3')->nullable();
-            $table->string('provinsi3')->nullable();
-            $table->string('kodepos3')->nullable();
-            $table->string('foto');
+            $table->foreignId('user_id')->unique()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('nik', 25)->nullable();
+            $table->string('no_telp', 20)->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan'])->nullable();
+            $table->string('pekerjaan')->nullable();
+            $table->string('nama_perusahaan')->nullable();
+            $table->integer('lama_bekerja_bulan')->nullable();
+            $table->decimal('penghasilan_bulanan', 14, 2)->nullable();
+            $table->string('status_pernikahan')->nullable();
+            $table->string('alamat_ktp')->nullable();
+            $table->string('kota_ktp')->nullable();
+            $table->string('provinsi_ktp')->nullable();
+            $table->string('kodepos_ktp')->nullable();
+            $table->string('alamat_domisili')->nullable();
+            $table->string('kota_domisili')->nullable();
+            $table->string('provinsi_domisili')->nullable();
+            $table->string('kodepos_domisili')->nullable();
+            $table->string('nama_kontak_darurat')->nullable();
+            $table->string('hubungan_kontak_darurat')->nullable();
+            $table->string('no_telp_kontak_darurat', 20)->nullable();
+            $table->string('foto_profil')->nullable();
             $table->timestamps();
         });
     }
@@ -39,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('user_profiles');
     }
 };

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_motor', 100);
             $table->foreignId('id_jenis_motor')->references('id')->on('jenis_motor')->onUpdate('cascade')->onDelete('cascade');
-            $table->decimal('harga_jual', 11);
+            $table->decimal('harga_jual', 11, 2);
             $table->text('deskripsi_motor');
             $table->string('warna', 50);
             $table->string('kapasitas_mesin', 10);
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('foto1');
             $table->string('foto2');
             $table->string('foto3');
-            $table->decimal('stok', 11);
+            $table->decimal('stok', 11, 2);
+            $table->boolean('status_aktif')->default(true);
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('motor');
     }
 };

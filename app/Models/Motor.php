@@ -1,5 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Motor extends Model
 {
+    use HasFactory;
+
     protected $table = 'motor';
 
     protected $fillable = [
@@ -13,8 +22,18 @@ class Motor extends Model
         'foto1',
         'foto2',
         'foto3',
-        'stok'
+        'stok',
+        'status_aktif',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'harga_jual' => 'float',
+            'stok' => 'float',
+            'status_aktif' => 'boolean',
+        ];
+    }
 
     public function jenisMotor()
     {
@@ -24,5 +43,10 @@ class Motor extends Model
     public function pengajuanKredits()
     {
         return $this->hasMany(PengajuanKredit::class, 'id_motor');
+    }
+
+    public function getPrimaryImageAttribute(): ?string
+    {
+        return $this->foto1 ?: $this->foto2 ?: $this->foto3;
     }
 }

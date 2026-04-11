@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_active',
+        'last_login_at',
     ];
 
     /**
@@ -43,6 +46,48 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
+            'last_login_at' => 'datetime',
         ];
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    public function pengajuanKredits()
+    {
+        return $this->hasMany(PengajuanKredit::class);
+    }
+
+    public function assignedPengajuanKredits()
+    {
+        return $this->hasMany(PengajuanKredit::class, 'assigned_admin_id');
+    }
+
+    public function approvedPengajuanKredits()
+    {
+        return $this->hasMany(PengajuanKredit::class, 'approved_by');
+    }
+
+    public function rejectedPengajuanKredits()
+    {
+        return $this->hasMany(PengajuanKredit::class, 'rejected_by');
+    }
+
+    public function createdCredits()
+    {
+        return $this->hasMany(Kredit::class, 'created_by');
+    }
+
+    public function verifiedInstallments()
+    {
+        return $this->hasMany(Angsuran::class, 'verified_by');
+    }
+
+    public function isRole(string ...$roles): bool
+    {
+        return in_array($this->role, $roles, true);
     }
 }
