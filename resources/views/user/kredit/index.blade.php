@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.user-portal')
+
+@section('title', 'Kredit Saya')
+@section('eyebrow', 'Kontrak aktif')
+@section('page-description', 'Daftar kontrak kredit aktif, metode pembayaran, dan status pengiriman unit.')
+
+@section('page-actions')
+    <a href="{{ route('user.payments.index') }}" class="btn btn-primary">Pembayaran QRIS</a>
+@endsection
 
 @section('content')
     <section class="km-stack">
@@ -21,6 +29,11 @@
                         <div><strong>Sisa kredit</strong><p class="km-subtle">Rp{{ number_format((float) $credit->sisa_kredit, 0, ',', '.') }}</p></div>
                         <div><strong>Metode bayar</strong><p class="km-subtle">{{ $credit->metodeBayar?->metode_bayar ?: '-' }}</p></div>
                         <div><strong>Pengiriman</strong><p class="km-subtle">{{ $credit->pengiriman?->status_kirim ?: 'Belum dibuat' }}</p></div>
+                        <div><strong>Angsuran tercatat</strong><p class="km-subtle">{{ $credit->angsurans_count }} pembayaran</p></div>
+                    </div>
+                    <div class="table-actions" style="margin-top: 1rem;">
+                        <a href="{{ route('user.kredit.show', $credit) }}" class="km-button-secondary">Detail Kredit</a>
+                        <a href="{{ route('user.payments.index') }}" class="km-button">Pembayaran</a>
                     </div>
                 </article>
             @empty

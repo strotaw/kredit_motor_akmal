@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.backoffice')
+
+@section('title', 'Kredit Aktif')
+@section('page-description', 'Pantau kontrak aktif, sisa kredit, dan status pembayaran user.')
 
 @section('content')
     <section class="km-stack">

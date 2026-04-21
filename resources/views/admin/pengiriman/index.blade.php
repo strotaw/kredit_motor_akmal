@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.backoffice')
+
+@section('title', 'Pengiriman Unit')
+@section('page-description', 'Monitor unit yang sedang dikirim ke customer dari satu dashboard operasional.')
 
 @section('content')
     <section class="km-stack">

@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'midtrans' => [
+        'merchant_id' => env('MIDTRANS_MERCHANT_ID'),
+        'server_key' => env('MIDTRANS_SERVER_KEY'),
+        'client_key' => env('MIDTRANS_CLIENT_KEY'),
+        'is_production' => (bool) env('MIDTRANS_IS_PRODUCTION', false),
+        'qris_label' => env('MIDTRANS_QRIS_LABEL', 'QRIS Dummy Midtrans Sandbox'),
+    ],
+
 ];

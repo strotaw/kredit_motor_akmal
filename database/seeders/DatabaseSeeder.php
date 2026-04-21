@@ -176,10 +176,10 @@ class DatabaseSeeder extends Seeder
         );
 
         $metodeBayar = MetodeBayar::query()->updateOrCreate(
-            ['metode_bayar' => 'Transfer Bank', 'tempat_bayar' => 'BCA Virtual Account'],
+            ['metode_bayar' => 'QRIS Dummy', 'tempat_bayar' => 'Midtrans Sandbox'],
             [
-                'no_rekening' => '8800123456',
-                'url_logo' => 'metode-bayar/bca.png',
+                'no_rekening' => 'QRIS-MID-SBX-001',
+                'url_logo' => 'images/payment/qris-midtrans-dummy.svg',
             ]
         );
 

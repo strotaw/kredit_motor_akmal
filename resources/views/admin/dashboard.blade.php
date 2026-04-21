@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.backoffice')
+
+@section('title', 'Dashboard Admin')
+@section('page-description', 'Pantau antrian pengajuan, kredit aktif, dan progres pengiriman dari dashboard operasional.')
 
 @section('content')
     <section class="km-stack">

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 760" role="img" aria-labelledby="qrisTitle qrisDesc">
+  <title id="qrisTitle">QRIS Dummy Midtrans Sandbox</title>
+  <desc id="qrisDesc">Visual QRIS dummy untuk simulasi pembayaran cicilan user menggunakan Midtrans sandbox.</desc>
+  <rect width="620" height="760" rx="36" fill="#ffffff"/>
+  <rect x="24" y="24" width="572" height="712" rx="28" fill="#f8fbff" stroke="#d7e4f4" stroke-width="4"/>
+  <rect x="52" y="52" width="516" height="94" rx="22" fill="#173560"/>
+  <text x="82" y="95" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="36" font-weight="700" fill="#ffffff">QRIS Dummy</text>
+  <text x="82" y="124" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="20" fill="#c8d5ea">Midtrans Sandbox Preview</text>
+  <g transform="translate(86 184)">
+    <rect width="448" height="448" rx="28" fill="#ffffff" stroke="#173560" stroke-width="10"/>
+    <g fill="#173560">
+      <rect x="24" y="24" width="108" height="108" rx="10"/>
+      <rect x="44" y="44" width="68" height="68" fill="#ffffff"/>
+      <rect x="292" y="24" width="108" height="108" rx="10"/>
+      <rect x="312" y="44" width="68" height="68" fill="#ffffff"/>
+      <rect x="24" y="292" width="108" height="108" rx="10"/>
+      <rect x="44" y="312" width="68" height="68" fill="#ffffff"/>
+      <rect x="170" y="24" width="22" height="22"/>
+      <rect x="214" y="24" width="22" height="22"/>
+      <rect x="236" y="46" width="22" height="22"/>
+      <rect x="170" y="68" width="22" height="22"/>
+      <rect x="214" y="90" width="22" height="22"/>
+      <rect x="170" y="112" width="22" height="22"/>
+      <rect x="214" y="134" width="22" height="22"/>
+      <rect x="258" y="156" width="22" height="22"/>
+      <rect x="302" y="156" width="22" height="22"/>
+      <rect x="346" y="156" width="22" height="22"/>
+      <rect x="170" y="178" width="22" height="22"/>
+      <rect x="214" y="200" width="22" height="22"/>
+      <rect x="258" y="222" width="22" height="22"/>
+      <rect x="302" y="222" width="22" height="22"/>
+      <rect x="346" y="222" width="22" height="22"/>
+      <rect x="170" y="244" width="22" height="22"/>
+      <rect x="214" y="266" width="22" height="22"/>
+      <rect x="258" y="288" width="22" height="22"/>
+      <rect x="302" y="288" width="22" height="22"/>
+      <rect x="170" y="310" width="22" height="22"/>
+      <rect x="214" y="354" width="22" height="22"/>
+      <rect x="258" y="354" width="22" height="22"/>
+      <rect x="280" y="24" width="22" height="22"/>
+      <rect x="324" y="68" width="22" height="22"/>
+      <rect x="368" y="112" width="22" height="22"/>
+      <rect x="148" y="378" width="22" height="22"/>
+      <rect x="192" y="378" width="22" height="22"/>
+      <rect x="236" y="378" width="22" height="22"/>
+      <rect x="302" y="356" width="22" height="22"/>
+      <rect x="346" y="334" width="22" height="22"/>
+      <rect x="390" y="312" width="22" height="22"/>
+      <rect x="390" y="268" width="22" height="22"/>
+      <rect x="236" y="112" width="22" height="22"/>
+      <rect x="258" y="90" width="22" height="22"/>
+      <rect x="324" y="112" width="22" height="22"/>
+      <rect x="390" y="156" width="22" height="22"/>
+      <rect x="126" y="170" width="22" height="22"/>
+      <rect x="104" y="214" width="22" height="22"/>
+      <rect x="148" y="236" width="22" height="22"/>
+      <rect x="104" y="346" width="22" height="22"/>
+      <rect x="346" y="378" width="22" height="22"/>
+      <rect x="390" y="400" width="22" height="22"/>
+      <rect x="302" y="400" width="22" height="22"/>
+      <rect x="214" y="422" width="22" height="22"/>
+      <rect x="258" y="422" width="22" height="22"/>
+      <rect x="170" y="400" width="22" height="22"/>
+    </g>
+  </g>
+  <text x="310" y="680" text-anchor="middle" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="28" font-weight="700" fill="#173560">Scan dengan aplikasi QRIS apa saja</text>
+  <text x="310" y="716" text-anchor="middle" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="20" fill="#61708a">Sandbox visual only - tidak memproses dana nyata</text>
+</svg>

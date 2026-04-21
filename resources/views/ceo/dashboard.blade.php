@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.backoffice')
+
+@section('title', 'Dashboard CEO')
+@section('page-description', 'Ringkasan KPI bisnis, performa motor, dan total pendapatan angsuran.')
 
 @section('content')
     <section class="km-stack">

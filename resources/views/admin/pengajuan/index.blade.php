@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.backoffice')
+
+@section('title', 'Pengajuan Kredit')
+@section('page-description', 'Daftar seluruh pengajuan kredit yang sedang ditangani tim admin.')
 
 @section('content')
     <section class="km-stack">

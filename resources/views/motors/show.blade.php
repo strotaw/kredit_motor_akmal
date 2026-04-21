@@ -1,68 +1,161 @@
-@extends('layouts.app')
+@extends('layouts.public')
+
+@section('title', $motor->nama_motor)
 
 @section('content')
-    <section class="km-stack">
-        <div class="km-grid km-grid-2">
-            <div class="km-card">
-                <span class="km-chip">{{ $motor->jenisMotor?->merk ?? 'Motor' }}</span>
-                <h1 style="font-size: 2.3rem; margin-top: 1rem;">{{ $motor->nama_motor }}</h1>
-                <p class="km-subtle" style="margin-top: 0.7rem;">{{ $motor->deskripsi_motor }}</p>
-                <div class="km-grid km-grid-2" style="margin-top: 1.4rem;">
-                    <div class="km-card" style="background: white;">
-                        <p class="km-subtle">Harga cash</p>
-                        <div class="km-card-value" style="font-size: 1.4rem;">Rp{{ number_format((float) $motor->harga_jual, 0, ',', '.') }}</div>
-                    </div>
-                    <div class="km-card" style="background: white;">
-                        <p class="km-subtle">Stok</p>
-                        <div class="km-card-value" style="font-size: 1.4rem;">{{ number_format((float) $motor->stok, 0, ',', '.') }}</div>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                    @auth
-                        <a href="{{ route('user.pengajuan.index') }}" class="km-button">Lanjut ke Pengajuan</a>
-                    @else
-                        <a href="{{ route('register') }}" class="km-button">Daftar untuk Mengajukan</a>
-                    @endauth
-                    <a href="{{ route('motors.index') }}" class="km-button-secondary">Kembali ke katalog</a>
-                </div>
-            </div>
+    @php
+        $photos = collect([$motor->foto1, $motor->foto2, $motor->foto3])->filter();
+    @endphp
 
-            <div class="km-card">
-                <h3>Spesifikasi ringkas</h3>
-                <div class="km-stack" style="margin-top: 1rem;">
-                    <div>
-                        <strong>Warna</strong>
-                        <p class="km-subtle">{{ $motor->warna }}</p>
+    <section class="content-stack">
+        <div class="grid-2">
+            <article class="hero-card hero-card--public">
+                <div class="badge-row">
+                    <span class="pill pill-soft">{{ $motor->jenisMotor?->merk ?? 'Motor' }}</span>
+                    <span class="pill pill-soft">{{ ucfirst(str_replace('_', ' ', $motor->jenisMotor?->tipe ?? 'umum')) }}</span>
+                    <span class="pill pill-soft">{{ $motor->tahun }}</span>
+                </div>
+                <h1 class="hero-card__title" style="max-width: 14ch;">{{ $motor->nama_motor }}</h1>
+                <p class="hero-card__copy">{{ $motor->deskripsi_motor }}</p>
+
+                <div class="grid-2" style="margin-top: 18px;">
+                    <div class="data-card">
+                        <div class="eyebrow">Harga cash</div>
+                        <div class="metric-card__value" style="margin-top: 10px;">Rp{{ number_format((float) $motor->harga_jual, 0, ',', '.') }}</div>
                     </div>
-                    <div>
-                        <strong>Kapasitas mesin</strong>
-                        <p class="km-subtle">{{ $motor->kapasitas_mesin }}</p>
-                    </div>
-                    <div>
-                        <strong>Tahun</strong>
-                        <p class="km-subtle">{{ $motor->tahun }}</p>
-                    </div>
-                    <div>
-                        <strong>Foto utama</strong>
-                        <p class="km-subtle">{{ $motor->primary_image ?: 'Belum ada path foto utama.' }}</p>
+                    <div class="data-card">
+                        <div class="eyebrow">Estimasi mulai dari</div>
+                        <div class="metric-card__value" style="margin-top: 10px;">Rp{{ number_format((float) ($defaultSimulation['cicilan_perbulan'] ?? 0), 0, ',', '.') }}</div>
                     </div>
                 </div>
-            </div>
+
+                <div class="hero-actions">
+                    <a href="{{ route('simulation', ['motor' => $motor->id]) }}" class="btn btn-secondary">Simulasi Kredit</a>
+                    @auth
+                        <a href="{{ route('user.pengajuan.create', ['motor' => $motor->id]) }}" class="btn btn-primary">Lanjut ke Pengajuan</a>
+                    @else
+                        <a href="{{ route('register') }}" class="btn btn-primary">Daftar untuk Mengajukan</a>
+                    @endauth
+                </div>
+            </article>
+
+            <article class="panel">
+                <div class="eyebrow">Spesifikasi ringkas</div>
+                <div class="summary-list" style="margin-top: 16px;">
+                    <div class="summary-list__item">
+                        <span>Warna</span>
+                        <strong>{{ $motor->warna }}</strong>
+                    </div>
+                    <div class="summary-list__item">
+                        <span>Kapasitas mesin</span>
+                        <strong>{{ $motor->kapasitas_mesin }}</strong>
+                    </div>
+                    <div class="summary-list__item">
+                        <span>Stok</span>
+                        <strong>{{ number_format((float) $motor->stok, 0, ',', '.') }} unit</strong>
+                    </div>
+                    <div class="summary-list__item">
+                        <span>Tenor tersedia</span>
+                        <strong>{{ $tenors->pluck('lama_cicilan')->implode(', ') }} bulan</strong>
+                    </div>
+                    <div class="summary-list__item">
+                        <span>Asuransi</span>
+                        <strong>{{ $insurances->pluck('nama_asuransi')->implode(', ') }}</strong>
+                    </div>
+                </div>
+            </article>
         </div>
 
-        <div class="km-card">
-            <h3>Motor serupa</h3>
-            <div class="km-grid km-grid-3" style="margin-top: 1rem;">
-                @forelse ($relatedMotors as $relatedMotor)
-                    <a href="{{ route('motors.show', $relatedMotor) }}" class="km-card" style="background: white;">
-                        <h3>{{ $relatedMotor->nama_motor }}</h3>
-                        <p class="km-subtle" style="margin-top: 0.35rem;">{{ $relatedMotor->warna }} • {{ $relatedMotor->tahun }}</p>
-                        <div class="km-card-value" style="font-size: 1.35rem;">Rp{{ number_format((float) $relatedMotor->harga_jual, 0, ',', '.') }}</div>
-                    </a>
+        <section class="panel">
+            <div class="card-head">
+                <div>
+                    <div class="eyebrow">Galeri motor</div>
+                    <h2 style="margin: 12px 0 6px;">Foto unit</h2>
+                </div>
+                <a href="{{ route('motors.index') }}" class="btn btn-secondary">Kembali ke katalog</a>
+            </div>
+
+            <div class="grid-3" style="margin-top: 18px;">
+                @forelse ($photos as $index => $photo)
+                    @php
+                        $isAbsolute = \Illuminate\Support\Str::startsWith($photo, ['http://', 'https://', '/']);
+                        $photoUrl = $isAbsolute
+                            ? $photo
+                            : (file_exists(public_path($photo)) ? asset($photo) : asset('storage/'.$photo));
+                    @endphp
+                    <article class="data-card" style="padding: 14px;">
+                        <div style="aspect-ratio: 4 / 3; overflow: hidden; border-radius: 18px; background: linear-gradient(135deg, rgba(23, 53, 96, 0.08), rgba(240, 107, 47, 0.12));">
+                            <img src="{{ $photoUrl }}" alt="Foto {{ $index + 1 }} {{ $motor->nama_motor }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p class="muted-text" style="margin: 12px 0 0;">Foto {{ $index + 1 }}</p>
+                    </article>
                 @empty
-                    <div class="km-empty" style="grid-column: 1 / -1;">Belum ada motor lain pada jenis yang sama.</div>
+                    <div class="empty-state" style="grid-column: 1 / -1;">Foto unit belum tersedia.</div>
                 @endforelse
             </div>
-        </div>
+        </section>
+
+        @if ($defaultSimulation)
+            <section class="grid-2">
+                <article class="info-card">
+                    <div class="eyebrow">Simulasi awal</div>
+                    <h2 style="margin: 12px 0 8px;">Perkiraan paket kredit</h2>
+                    <div class="summary-list">
+                        <div class="summary-list__item">
+                            <span>DP minimal</span>
+                            <strong>Rp{{ number_format((float) $defaultSimulation['minimum_dp'], 0, ',', '.') }}</strong>
+                        </div>
+                        <div class="summary-list__item">
+                            <span>Harga kredit</span>
+                            <strong>Rp{{ number_format((float) $defaultSimulation['harga_kredit'], 0, ',', '.') }}</strong>
+                        </div>
+                        <div class="summary-list__item">
+                            <span>Asuransi per bulan</span>
+                            <strong>Rp{{ number_format((float) $defaultSimulation['biaya_asuransi_perbulan'], 0, ',', '.') }}</strong>
+                        </div>
+                        <div class="summary-list__item">
+                            <span>Cicilan per bulan</span>
+                            <strong>Rp{{ number_format((float) $defaultSimulation['cicilan_perbulan'], 0, ',', '.') }}</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="info-card">
+                    <div class="eyebrow">Aksi</div>
+                    <h2 style="margin: 12px 0 8px;">Lanjutkan proses</h2>
+                    <p class="muted-text" style="margin: 0;">Sesuaikan DP, tenor, dan asuransi dari halaman simulasi lalu lanjutkan ke form pengajuan kredit.</p>
+                    <div class="card-stack" style="margin-top: 18px;">
+                        <a href="{{ route('simulation', ['motor' => $motor->id, 'tenor' => $tenors->first()?->id, 'asuransi' => $insurances->first()?->id, 'dp' => $defaultSimulation['minimum_dp']]) }}" class="quick-link">Atur simulasi lengkap</a>
+                        @auth
+                            <a href="{{ route('user.pengajuan.create', ['motor' => $motor->id, 'tenor' => $tenors->first()?->id, 'asuransi' => $insurances->first()?->id, 'dp' => $defaultSimulation['minimum_dp']]) }}" class="quick-link">Buka form pengajuan</a>
+                        @endauth
+                    </div>
+                </article>
+            </section>
+        @endif
+
+        <section class="panel">
+            <div class="card-head">
+                <div>
+                    <div class="eyebrow">Motor serupa</div>
+                    <h2 style="margin: 12px 0 6px;">Pilihan lain dalam kategori yang sama</h2>
+                </div>
+            </div>
+            <div class="grid-3" style="margin-top: 18px;">
+                @forelse ($relatedMotors as $relatedMotor)
+                    <a href="{{ route('motors.show', $relatedMotor) }}" class="data-card">
+                        <div class="badge-row">
+                            <span class="pill pill-soft">{{ $relatedMotor->jenisMotor?->merk ?? 'Motor' }}</span>
+                            <span class="pill pill-soft">{{ $relatedMotor->tahun }}</span>
+                        </div>
+                        <h3 style="margin: 16px 0 8px;">{{ $relatedMotor->nama_motor }}</h3>
+                        <p class="muted-text" style="margin: 0;">{{ $relatedMotor->warna }} | {{ $relatedMotor->kapasitas_mesin }}</p>
+                        <div class="metric-card__value" style="margin-top: 18px;">Rp{{ number_format((float) $relatedMotor->harga_jual, 0, ',', '.') }}</div>
+                    </a>
+                @empty
+                    <div class="empty-state" style="grid-column: 1 / -1;">Belum ada motor lain pada jenis yang sama.</div>
+                @endforelse
+            </div>
+        </section>
     </section>
 @endsection

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LandingController::class, 'index'])->name('home');
 Route::get('/motors', [MotorCatalogController::class, 'index'])->name('motors.index');
 Route::get('/motors/{motor}', [MotorCatalogController::class, 'show'])->name('motors.show');
+Route::get('/simulasi', [MotorCatalogController::class, 'simulation'])->name('simulation');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -27,14 +28,24 @@ Route::middleware('auth')->group(function (): void {
     Route::prefix('user')->name('user.')->middleware('role:user')->group(function (): void {
         Route::get('/dashboard', [UserPortalController::class, 'dashboard'])->name('dashboard');
         Route::get('/profile', [UserPortalController::class, 'profile'])->name('profile');
+        Route::post('/profile', [UserPortalController::class, 'profileUpdate'])->name('profile.update');
         Route::get('/pengajuan', [UserPortalController::class, 'pengajuanIndex'])->name('pengajuan.index');
+        Route::get('/pengajuan/create', [UserPortalController::class, 'pengajuanCreate'])->name('pengajuan.create');
+        Route::post('/pengajuan', [UserPortalController::class, 'pengajuanStore'])->name('pengajuan.store');
+        Route::get('/pengajuan/{pengajuan}', [UserPortalController::class, 'pengajuanShow'])->name('pengajuan.show');
+        Route::post('/pengajuan/{pengajuan}/cancel', [UserPortalController::class, 'pengajuanCancel'])->name('pengajuan.cancel');
         Route::get('/kredit', [UserPortalController::class, 'kreditIndex'])->name('kredit.index');
+        Route::get('/kredit/{kredit}', [UserPortalController::class, 'kreditShow'])->name('kredit.show');
+        Route::get('/payments', [UserPortalController::class, 'paymentsIndex'])->name('payments.index');
     });
 
     Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function (): void {
         Route::get('/dashboard', [AdminPortalController::class, 'dashboard'])->name('dashboard');
         Route::get('/pengajuan', [AdminPortalController::class, 'pengajuanIndex'])->name('pengajuan.index');
         Route::get('/kredit', [AdminPortalController::class, 'kreditIndex'])->name('kredit.index');
+        Route::get('/angsuran', [AdminPortalController::class, 'angsuranIndex'])->name('angsuran.index');
+        Route::post('/angsuran', [AdminPortalController::class, 'angsuranStore'])->name('angsuran.store');
+        Route::post('/angsuran/{angsuran}/verify', [AdminPortalController::class, 'angsuranVerify'])->name('angsuran.verify');
         Route::get('/pengiriman', [AdminPortalController::class, 'pengirimanIndex'])->name('pengiriman.index');
     });
 
@@ -42,5 +53,6 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/dashboard', [CeoPortalController::class, 'dashboard'])->name('dashboard');
         Route::get('/users', [CeoPortalController::class, 'usersIndex'])->name('users.index');
         Route::get('/transaksi', [CeoPortalController::class, 'transaksiIndex'])->name('transaksi.index');
+        Route::get('/laporan', [CeoPortalController::class, 'laporanIndex'])->name('laporan.index');
     });
 });
